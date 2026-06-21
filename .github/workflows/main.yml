@@ -9,11 +9,12 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      - uses: bahmutov/npm-install@v1
+          node-version: '18'
+      - name: install
+        run: npm ci
 
       - name: lint
         run: npm run lint
@@ -24,11 +25,12 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      - uses: bahmutov/npm-install@v1
+          node-version: '18'
+      - name: install
+        run: npm ci
 
       - name: build
         run: npm run build
@@ -39,11 +41,12 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      - uses: bahmutov/npm-install@v1
+          node-version: '18'
+      - name: install
+        run: npm ci
 
       - name: test
         run: npm run test
