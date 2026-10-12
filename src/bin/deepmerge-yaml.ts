@@ -3,7 +3,7 @@
 import * as path from 'path';
 import { readFileSync, writeFile } from '../util/file';
 import { deepmergeYaml } from '..';
-import program from 'commander';
+import { program } from 'commander';
 
 const meta = JSON.parse(
   readFileSync(path.resolve(__dirname, '../../package.json')).toString(),
@@ -15,6 +15,7 @@ process.stdin.setEncoding('utf8');
 program
   .version(meta.version)
   .usage('$ npx deepmerge-yaml /path/to/some1.yaml /path/to/some2.yaml')
+  .argument('[files...]', 'paths to the yaml files to merge')
   .option('-o, --output <path>', 'write result to the path')
   .parse(process.argv);
 

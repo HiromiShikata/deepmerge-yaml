@@ -1,8 +1,6 @@
 import * as fs from 'fs';
 
-export function readFileSync(...args: Parameters<typeof fs.readFileSync>) {
-  return fs.readFileSync(...args);
-}
+export const readFileSync = fs.readFileSync;
 
 export function readFile(filePath: string): Promise<string> {
   return exec(fs.readFile, filePath, 'utf8');
