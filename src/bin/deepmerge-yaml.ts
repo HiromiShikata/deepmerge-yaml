@@ -15,6 +15,7 @@ process.stdin.setEncoding('utf8');
 program
   .version(meta.version)
   .usage('$ npx deepmerge-yaml /path/to/some1.yaml /path/to/some2.yaml')
+  .argument('[files...]', 'paths to the yaml files to merge')
   .option('-o, --output <path>', 'write result to the path')
   .parse(process.argv);
 

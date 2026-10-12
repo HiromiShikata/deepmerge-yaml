@@ -1,9 +1,11 @@
 import { execFileSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { deepmergeYaml } from '../src';
 
 const repoRoot = path.resolve(__dirname, '..');
 let compiledCjsBuildDir: string;
+let tmpYamlDir: string;
 
 beforeAll(() => {
   compiledCjsBuildDir = fs.mkdtempSync(
@@ -18,6 +20,14 @@ beforeAll(() => {
 
 afterAll(() => {
   fs.rmSync(compiledCjsBuildDir, { recursive: true, force: true });
+});
+
+beforeEach(() => {
+  tmpYamlDir = fs.mkdtempSync(path.join(repoRoot, 'tmp-bin-test-yaml-'));
+});
+
+afterEach(() => {
+  fs.rmSync(tmpYamlDir, { recursive: true, force: true });
 });
 
 const runCompiledCli = (
@@ -60,4 +70,21 @@ test('--help prints usage built by the commander program without crashing', () =
   expect(result.exitCode).toBe(0);
   expect(result.stdout).toContain('Usage: deepmerge-yaml');
   expect(result.stdout).toContain('-o, --output');
+});
+
+test('merging two real yaml file path arguments exits 0 and prints the deep-merged content (regression: commander v13 must not reject the file-path arguments as excess)', () => {
+  const aContent = 'foo:\n  bar: 1\n  baz: 2\n';
+  const bContent = 'foo:\n  baz: 3\n  qux: 4\n';
+  const aPath = path.join(tmpYamlDir, 'a.yaml');
+  const bPath = path.join(tmpYamlDir, 'b.yaml');
+  fs.writeFileSync(aPath, aContent);
+  fs.writeFileSync(bPath, bContent);
+
+  const expected = deepmergeYaml(aContent, bContent).trim();
+
+  const result = runCompiledCli([aPath, bPath]);
+
+  expect(result.stderr).toBe('');
+  expect(result.exitCode).toBe(0);
+  expect(result.stdout.trim()).toBe(expected);
 });
