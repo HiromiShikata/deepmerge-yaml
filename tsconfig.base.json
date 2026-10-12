@@ -2,6 +2,9 @@
   "compilerOptions": {
     "target": "esnext",
     "baseUrl": "./",
+    "rootDir": "./src",
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "declaration": true,

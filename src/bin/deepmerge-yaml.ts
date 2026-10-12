@@ -3,7 +3,7 @@
 import * as path from 'path';
 import { readFileSync, writeFile } from '../util/file';
 import { deepmergeYaml } from '..';
-import program from 'commander';
+import { program } from 'commander';
 
 const meta = JSON.parse(
   readFileSync(path.resolve(__dirname, '../../package.json')).toString(),

@@ -30,7 +30,9 @@ test('exits 0 when response has no errors field', () => {
 test('exits 0 with warning for unstable PR status', () => {
   const input = JSON.stringify({
     data: null,
-    errors: [{ type: 'UNPROCESSABLE', message: 'Pull request is in unstable status' }],
+    errors: [
+      { type: 'UNPROCESSABLE', message: 'Pull request is in unstable status' },
+    ],
   });
   const result = runScript(input);
   expect(result.exitCode).toBe(0);
@@ -70,7 +72,9 @@ test('exits 0 with warning for protected branch error (required before protected
 test('exits 1 for unknown error message', () => {
   const input = JSON.stringify({
     data: null,
-    errors: [{ type: 'UNKNOWN_ERROR', message: 'Something went wrong unexpectedly' }],
+    errors: [
+      { type: 'UNKNOWN_ERROR', message: 'Something went wrong unexpectedly' },
+    ],
   });
   const result = runScript(input);
   expect(result.exitCode).toBe(1);
